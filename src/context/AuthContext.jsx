@@ -14,10 +14,6 @@ export const AuthProvider = ({ children }) => {
       try {
         setCurrentUser(JSON.parse(storedUser));
       } catch (error) {
-        console.error(
-          "AuthContext: Error parsing stored user from localStorage",
-          error
-        );
         localStorage.removeItem("recipeAppUser");
       }
     }
@@ -25,14 +21,31 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    // Тази функция ще я имплементираме в следващ къмит днес
-    console.log(
-      "AuthContext: Login function called (to be implemented with fetch):",
-      email
-    );
-    return Promise.reject(
-      new Error("Login functionality not fully implemented yet.")
-    );
+    try {
+      const response = await fetch(
+        `${API_URL}/users?email=${encodeURIComponent(
+          email
+        )}&password=${encodeURIComponent(password)}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const users = await response.json();
+
+      if (users && users.length > 0) {
+        const user = users[0];
+        setCurrentUser(user);
+        localStorage.setItem("recipeAppUser", JSON.stringify(user));
+        return user;
+      } else {
+        throw new Error("Invalid email or password");
+      }
+    } catch (error) {
+      console.error("Login error in AuthContext:", error.message);
+      throw new Error(error.message || "Login failed. Please try again.");
+    }
   };
 
   const register = async (email, password) => {
@@ -91,7 +104,6 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setCurrentUser(null);
     localStorage.removeItem("recipeAppUser");
-    console.log("AuthContext: User logged out and removed from localStorage");
   };
 
   const value = {
