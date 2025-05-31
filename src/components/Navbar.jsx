@@ -17,6 +17,7 @@ const Navbar = () => {
       <Link to="/recipes">Recipes</Link>
       {currentUser ? (
         <>
+          <Link to="/create-recipe">Add Recipe</Link>
           <span>Hello, {currentUser.email}</span>
           <button onClick={handleLogout}>Logout</button>
         </>
