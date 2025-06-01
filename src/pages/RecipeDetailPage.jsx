@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
 
 const API_URL = "http://localhost:3001";
 
 const RecipeDetailPage = () => {
   const { recipeId } = useParams();
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
+
   const [recipe, setRecipe] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     if (!recipeId) return;
@@ -35,11 +40,41 @@ const RecipeDetailPage = () => {
     fetchRecipeDetails();
   }, [recipeId]);
 
+  const handleDeleteRecipe = async () => {
+    if (!recipe || !currentUser || currentUser.id !== recipe.userId) {
+      setError("You are not authorized to delete this recipe.");
+      return;
+    }
+
+    if (
+      window.confirm(
+        "Are you sure you want to delete this recipe? This action cannot be undone."
+      )
+    ) {
+      setIsDeleting(true);
+      setError(null);
+      try {
+        const response = await fetch(`${API_URL}/recipes/${recipe.id}`, {
+          method: "DELETE",
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        navigate("/recipes");
+      } catch (err) {
+        setError(err.message || "Could not delete recipe.");
+        setIsDeleting(false);
+      }
+    }
+  };
+
   if (isLoading) {
     return <p>Loading recipe details...</p>;
   }
 
-  if (error) {
+  if (error && !recipe) {
     return (
       <div>
         <p style={{ color: "red" }}>Error: {error}</p>
@@ -51,7 +86,7 @@ const RecipeDetailPage = () => {
   if (!recipe) {
     return (
       <div>
-        <p>Recipe not found.</p>
+        <p>Recipe data is not available.</p>
         <Link to="/recipes">Back to all recipes</Link>
       </div>
     );
@@ -97,7 +132,25 @@ const RecipeDetailPage = () => {
           </small>
         </p>
       )}
-      <Link to="/recipes">Back to all recipes</Link>
+
+      {currentUser && recipe && currentUser.id === recipe.userId && (
+        <div style={{ marginTop: "20px" }}>
+          <button
+            onClick={handleDeleteRecipe}
+            disabled={isDeleting}
+            className="delete-recipe-button"
+          >
+            {isDeleting ? "Deleting..." : "Delete Recipe"}
+          </button>
+        </div>
+      )}
+      {error && recipe && (
+        <p style={{ color: "red", marginTop: "10px" }}>Error: {error}</p>
+      )}
+
+      <div style={{ marginTop: "20px" }}>
+        <Link to="/recipes">Back to all recipes</Link>
+      </div>
     </div>
   );
 };

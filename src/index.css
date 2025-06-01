@@ -216,3 +216,49 @@ p:has(> code) {
 .recipe-card a:hover {
   background-color: #e67e22;
 }
+
+.recipe-detail-page div[style*="margin-top: 20px"] > button,
+.delete-recipe-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.recipe-detail-page div[style*="margin-top: 20px"] > button:hover,
+.delete-recipe-button:hover {
+  background-color: #c0392b;
+  opacity: 0.9;
+}
+
+.recipe-detail-page div[style*="margin-top: 20px"] > button:disabled,
+.delete-recipe-button:disabled {
+  background-color: #f5c6cb;
+  color: #721c24;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.recipe-detail-page > div[style*="margin-top: 20px"] {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-welcome-message {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #555;
+  margin-top: 25px;
+  margin-bottom: 35px;
+}
