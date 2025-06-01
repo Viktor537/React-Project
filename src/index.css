@@ -1,68 +1,218 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
   margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 25px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+nav {
+  background-color: #e67e22;
+  padding: 12px 40px;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  margin-bottom: 30px;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+nav .nav-left,
+nav .nav-right {
+  display: flex;
+  align-items: center;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+nav a,
+nav span,
+nav button {
+  color: #ffffff;
+  margin-left: 25px;
+  text-decoration: none;
+  font-size: 0.95rem;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+nav a:first-child,
+nav .nav-left > a:first-child {
+  margin-left: 0;
+}
+
+nav a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+nav span {
+  font-weight: bold;
+}
+
+nav button {
+  background-color: #ffffff;
+  color: #e67e22;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+nav button:hover {
+  background-color: #f1f1f1;
+  color: #d35400;
+}
+
+h1,
+h2 {
+  color: #e67e22;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+h2 {
+  font-size: 1.8rem;
+}
+
+form {
+  max-width: 450px;
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+form div {
+  margin-bottom: 18px;
+}
+
+form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #495057;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="password"]:focus,
+form textarea:focus {
+  border-color: #e67e22;
+  box-shadow: 0 0 0 0.2rem rgba(230, 126, 34, 0.25);
+  outline: none;
+}
+
+form button[type="submit"] {
+  background-color: #e67e22;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  width: 100%;
+  transition: background-color 0.2s ease-in-out;
+}
+
+form button[type="submit"]:hover {
+  background-color: #d35400;
+}
+
+form button[type="submit"]:disabled {
+  background-color: #fdcb6e;
+  cursor: not-allowed;
+}
+
+p[style*="color: red"] {
+  background-color: #fff0f0;
+  border: 1px solid #ff7675;
+  color: #d63031;
+  padding: 10px 15px;
+  margin-top: 15px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+p:has(> code) {
+  text-align: center;
+  font-style: italic;
+  color: #7f8c8d;
+  padding: 20px;
+}
+
+.recipe-list-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 25px;
+}
+
+.recipe-card {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.recipe-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-card h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #e67e22;
+  font-size: 1.25rem;
+}
+
+.recipe-card p {
+  font-size: 0.9rem;
+  color: #495057;
+  margin-bottom: 15px;
+  flex-grow: 1;
+}
+
+.recipe-card a {
+  display: block;
+  background-color: #fd9644;
+  color: white;
+  padding: 10px 15px;
+  text-decoration: none;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.recipe-card a:hover {
+  background-color: #e67e22;
 }
